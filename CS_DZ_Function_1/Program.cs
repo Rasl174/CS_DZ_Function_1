@@ -46,24 +46,48 @@ namespace CS_DZ_Function_1
             }
         }
 
+        static void Add(ref string[] text)
+        {
+            string[] insertText = new string[text.Length + 1];
+            insertText[text.Length] = Console.ReadLine();
+
+            for (int i = 1; i < insertText.Length - 1; i++)
+            {
+                insertText[i] = text[i];
+            }
+            text = insertText;
+        }
+        
+        static void Delete(ref string [] text)
+        {
+            string[] newArray = new string[text.Length - 1];
+            Console.WriteLine("Введите номер досье который хотите удалить: ");
+            int userInput = Convert.ToInt32(Console.ReadLine());
+
+            if (userInput > 0 && userInput <= text.Length)
+            {
+                for (int i = 0; i < userInput - 1; i++)
+                {
+                    newArray[i] = text[i];
+                }
+                for (int i = userInput; i < text.Length; i++)
+                {
+                    newArray[i - 1] = text[i];
+                }
+                text = newArray;
+            }
+            else
+            {
+                Console.WriteLine("Введен не верный номер");
+            }
+        }
+
         static void CreateDossier(ref string[] name,ref string[] position)
         {
-            string[] newName = new string[name.Length + 1];
-            string[] newPosition = new string[position.Length + 1];
-
-            for (int i = 0; i < name.Length; i++)
-            {
-                newName[i] = name[i];
-                newPosition[i] = position[i];
-            }
-
-            name = newName;
-            position = newPosition;
-
             Console.WriteLine("Введите ФИО: ");
-            name[name.Length - 1] = Console.ReadLine();
+            Add(ref name);
             Console.WriteLine("Введите должность: ");
-            position[position.Length - 1] = Console.ReadLine();
+            Add(ref position);
             Console.Clear();
         }
 
@@ -88,25 +112,8 @@ namespace CS_DZ_Function_1
         {
             if(name.Length > 0 && position.Length > 0)
             {
-                string[] newArrayName = new string[name.Length - 1];
-                string[] newArrayPosition = new string[position.Length - 1];
-
-                Console.WriteLine("Введите номер досье который хотите удалить: ");
-                int userInput = Convert.ToInt32(Console.ReadLine());
-
-                for (int i = 0; i < userInput - 1; i++)
-                {
-                    newArrayName[i] = name[i];
-                    newArrayPosition[i] = position[i];
-                }
-                for (int i = userInput; i < position.Length; i++)
-                {
-                    newArrayName[i - 1] = name[i];
-                    newArrayPosition[i - 1] = position[i];
-                }
-
-                name = newArrayName;
-                position = newArrayPosition;
+                Delete(ref name);
+                Delete(ref position);
             }
             else
                 Console.WriteLine("Здесь нет еще ни одного досье!");
