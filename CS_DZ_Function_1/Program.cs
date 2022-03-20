@@ -10,13 +10,13 @@ namespace CS_DZ_Function_1
     {
         static void Main(string[] args)
         {
-            bool canExit = false;
-            string[] name = { };
-            string[] position = { };
+            bool isExit = false;
+            string[] names = { };
+            string[] positions = { };
 
             Console.WriteLine("Это программа для ведения досье\n");
 
-            while (!canExit)
+            while (isExit == false)
             {
                 Console.WriteLine("Для добавления досье введите 1 ");
                 Console.WriteLine("Для просмотра всех досье введите 2 ");
@@ -27,26 +27,26 @@ namespace CS_DZ_Function_1
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        CreateDossier(ref name, ref position);
+                        CreateDossier(ref names,ref positions);
                         break;
                     case "2":
-                        ShowAllDossier(ref name, ref position);
+                        ShowAllDossier(names, positions);
                         break;
                     case "3":
-                        DeleteDossier(ref name, ref position);
+                        DeleteDossier(ref names,ref positions);
                         break;
                     case "4":
-                        FindDossier(ref name, ref position);
+                        FindDossier(names, positions);
                         break;
                     case "5":
                     case "exit":
-                        canExit = true;
+                        isExit = true;
                         break;
                 }
             }
         }
 
-        static void CreateDossier(ref string[] name, ref string[] position)
+        static void CreateDossier(ref string[] name,ref string[] position)
         {
             string[] newName = new string[name.Length + 1];
             string[] newPosition = new string[position.Length + 1];
@@ -67,59 +67,76 @@ namespace CS_DZ_Function_1
             Console.Clear();
         }
 
-        static void ShowAllDossier(ref string[] name, ref string[] position)
+        static void ShowAllDossier(string[] names, string[] positions)
         {
-            Console.WriteLine("Все досье: ");
-
-            for (int i = 0; i < name.Length; i++)
+            if(names.Length > 0 && positions.Length > 0)
             {
-                Console.WriteLine((i + 1) + " - " + name[i] + " - " + position[i]);
+                Console.WriteLine("Все досье: ");
+
+                for (int i = 0; i < names.Length; i++)
+                {
+                    Console.WriteLine((i + 1) + " - " + names[i] + " - " + positions[i]);
+                }
             }
+            else
+                Console.WriteLine("Здесь нет еще ни одного досье!");
             Console.ReadKey();
             Console.Clear();
         }
 
-        static void DeleteDossier(ref string[] name, ref string[] position)
+        static void DeleteDossier(ref string[] name,ref string[] position)
         {
-            string[] newArrayName = new string[name.Length - 1];
-            string[] newArrayPosition = new string[position.Length - 1];
-
-            Console.WriteLine("Введите номер досье который хотите удалить: ");
-            int userInput = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < userInput - 1; i++)
+            if(name.Length > 0 && position.Length > 0)
             {
-                newArrayName[i] = name[i];
-                newArrayPosition[i] = position[i];
-            }
-            for (int i = userInput; i < position.Length; i++)
-            {
-                newArrayName[i - 1] = name[i];
-                newArrayPosition[i - 1] = position[i];
-            }
+                string[] newArrayName = new string[name.Length - 1];
+                string[] newArrayPosition = new string[position.Length - 1];
 
-            name = newArrayName;
-            position = newArrayPosition;
+                Console.WriteLine("Введите номер досье который хотите удалить: ");
+                int userInput = Convert.ToInt32(Console.ReadLine());
+
+                for (int i = 0; i < userInput - 1; i++)
+                {
+                    newArrayName[i] = name[i];
+                    newArrayPosition[i] = position[i];
+                }
+                for (int i = userInput; i < position.Length; i++)
+                {
+                    newArrayName[i - 1] = name[i];
+                    newArrayPosition[i - 1] = position[i];
+                }
+
+                name = newArrayName;
+                position = newArrayPosition;
+            }
+            else
+                Console.WriteLine("Здесь нет еще ни одного досье!");
+            
+            Console.ReadKey();
             Console.Clear();
         }
 
-        static void FindDossier(ref string[] name, ref string[] position)
+        static void FindDossier(string[] name, string[] position)
         {
-            Console.WriteLine("Введите фамилию: ");
-            string userInput = Console.ReadLine();
-            int indexDossier = 0;
-
-            indexDossier = Array.FindIndex(name, fullName => fullName.ToLower().Contains(userInput.ToLower()));
-
-            if (indexDossier == -1)
+            if(name.Length > 0 && position.Length > 0)
             {
-                Console.WriteLine("Такое досье не было найдено!");
+                Console.WriteLine("Введите фамилию: ");
+                string userInput = Console.ReadLine();
+                int indexDossier = 0;
+
+                indexDossier = Array.FindIndex(name, fullName => fullName.ToLower().Contains(userInput.ToLower()));
+
+                if (indexDossier == -1)
+                {
+                    Console.WriteLine("Такое досье не было найдено!");
+                }
+                else
+                {
+                    Console.WriteLine("Досье найдено!");
+                    Console.WriteLine((indexDossier + 1) + " - " + name[indexDossier] + " - " + position[indexDossier]);
+                }
             }
             else
-            {
-                Console.WriteLine("Досье найдено!");
-                Console.WriteLine((indexDossier + 1) + "-" + name[indexDossier] + "-" + position[indexDossier]);
-            }
+                Console.WriteLine("Здесь еще нет ни одного досье!");
             Console.ReadKey();
             Console.Clear();
         }
