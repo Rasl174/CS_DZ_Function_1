@@ -58,23 +58,28 @@ namespace CS_DZ_Function_1
             text = insertText;
         }
         
-        static void Delete(ref string [] text)
+        static void Delete(ref string [] name, ref string[] position)
         {
-            string[] newArray = new string[text.Length - 1];
+            string[] newArrayName = new string[name.Length - 1];
+            string[] newArrayPosition = new string[position.Length - 1];
+
             Console.WriteLine("Введите номер досье который хотите удалить: ");
             int userInput = Convert.ToInt32(Console.ReadLine());
 
-            if (userInput > 0 && userInput <= text.Length)
+            if (userInput > 0 && userInput <= name.Length)
             {
                 for (int i = 0; i < userInput - 1; i++)
                 {
-                    newArray[i] = text[i];
+                    newArrayName[i] = name[i];
+                    newArrayPosition[i] = position[i];
                 }
-                for (int i = userInput; i < text.Length; i++)
+                for (int i = userInput; i < name.Length; i++)
                 {
-                    newArray[i - 1] = text[i];
+                    newArrayName[i - 1] = name[i];
+                    newArrayPosition[i - 1] = position[i];
                 }
-                text = newArray;
+                name = newArrayName;
+                position = newArrayPosition;
             }
             else
             {
@@ -93,7 +98,7 @@ namespace CS_DZ_Function_1
 
         static void ShowAllDossier(string[] names, string[] positions)
         {
-            if(names.Length > 0 && positions.Length > 0)
+            if(names.Length > 0)
             {
                 Console.WriteLine("Все досье: ");
 
@@ -103,20 +108,23 @@ namespace CS_DZ_Function_1
                 }
             }
             else
+            {
                 Console.WriteLine("Здесь нет еще ни одного досье!");
+            }
             Console.ReadKey();
             Console.Clear();
         }
 
         static void DeleteDossier(ref string[] name,ref string[] position)
         {
-            if(name.Length > 0 && position.Length > 0)
+            if(name.Length > 0)
             {
-                Delete(ref name);
-                Delete(ref position);
+                Delete(ref name, ref position);
             }
-            else
+            else 
+            { 
                 Console.WriteLine("Здесь нет еще ни одного досье!");
+            }
             
             Console.ReadKey();
             Console.Clear();
@@ -124,7 +132,7 @@ namespace CS_DZ_Function_1
 
         static void FindDossier(string[] name, string[] position)
         {
-            if(name.Length > 0 && position.Length > 0)
+            if(name.Length > 0)
             {
                 Console.WriteLine("Введите фамилию: ");
                 string userInput = Console.ReadLine();
@@ -143,7 +151,9 @@ namespace CS_DZ_Function_1
                 }
             }
             else
+            {
                 Console.WriteLine("Здесь еще нет ни одного досье!");
+            }
             Console.ReadKey();
             Console.Clear();
         }
